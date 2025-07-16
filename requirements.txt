@@ -9,3 +9,4 @@ Flask-Cors
 Flask-SQLAlchemy
 requests
 Werkzeug
+psycopg2-binary
