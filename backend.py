@@ -7,7 +7,7 @@ from datetime import datetime, timedelta, date
 from flask_mail import Mail, Message
 from flask_cors import CORS
 hoje = date.today()
-import requests, re
+import requests, re, os
 
 # Configuração do app
 app = Flask(__name__)
@@ -28,8 +28,8 @@ app.config['JWT_SECRET_KEY'] = 'supersecretkey'  # Alterar para produção
 app.config['MAIL_SERVER'] = 'smtp.gmail.com'  # Servidor SMTP (use o seu)
 app.config['MAIL_PORT'] = 587  # Porta SMTP
 app.config['MAIL_USE_TLS'] = True  # Usar TLS para segurança
-app.config['MAIL_USERNAME'] = 'cotacoes.vivazpiedade@gmail.com'  # Seu e-mail
-app.config['MAIL_PASSWORD'] = 'vivazcotacoes500'  # Senha do e-mail (use variáveis de ambiente para segurança)
+app.config['MAIL_USERNAME'] = os.environ.get('MAIL_USERNAME')
+app.config['MAIL_PASSWORD'] = os.environ.get('MAIL_PASSWORD')
 mail = Mail(app)
 
 # Configurando datas para o prazo das cotações
