@@ -676,7 +676,38 @@ def resetar_senha(id):
     db.session.commit()
     return jsonify({'message': 'Senha redefinida com sucesso!'}), 200
 
+@app.route('/esqueci-senha', methods=['POST'])
+def esqueci_senha():
+    data = request.get_json()
+    email = data.get("email")
+    usuario = Usuario.query.filter_by(email=email).first()
+    if not usuario:
+        return jsonify({"message": "Usuário não encontrado"}), 404
 
+    token = create_access_token(identity=email, expires_delta=datetime.timedelta(hours=1))
+    link = f"https://sistema-vivaz-frontend.vercel.app/redefinir-senha?token={token}"
+
+    msg = Message(subject="Redefinição de Senha - Vivaz",
+                  recipients=[email],
+                  body=f"Olá!\n\nClique no link abaixo para redefinir sua senha:\n\n{link}")
+    mail.send(msg)
+
+    return jsonify({"message": "E-mail enviado com instruções para redefinir a senha."})
+
+@app.route('/redefinir-senha', methods=['POST'])
+@jwt_required()
+def redefinir_senha():
+    email = get_jwt_identity()
+    data = request.get_json()
+    nova_senha = generate_password_hash(data['nova_senha'])
+
+    usuario = Usuario.query.filter_by(email=email).first()
+    if not usuario:
+        return jsonify({"message": "Usuário não encontrado"}), 404
+
+    usuario.senha = nova_senha
+    db.session.commit()
+    return jsonify({"message": "Senha atualizada com sucesso!"})
 
 if __name__ == '__main__':
     with app.app_context():
