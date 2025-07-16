@@ -676,7 +676,7 @@ def resetar_senha(id):
     db.session.commit()
     return jsonify({'message': 'Senha redefinida com sucesso!'}), 200
 
-@app.route("/redefinir-senha", methods=["POST"])
+@app.route("/esqueci-senha", methods=["POST"])
 def esqueci_senha():
     data = request.get_json()
     email = data.get("email")
@@ -696,7 +696,7 @@ def esqueci_senha():
     mail.send(msg)
     return jsonify({"message": "E-mail de redefinição enviado com sucesso!"})
 
-@app.route("/nova-senha", methods=["POST"])
+@app.route("/redefinir-senha", methods=["POST"])
 @jwt_required()
 def nova_senha():
     usuario_id = get_jwt_identity()
