@@ -20,7 +20,8 @@ def aplicar_cors(response):
     response.headers["Access-Control-Allow-Headers"] = "Content-Type, Authorization"
     return response
 
-app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///sistema_cotacao.db'  # Trocar para PostgreSQL em produção
+#app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///sistema_cotacao.db'  # Trocar para PostgreSQL em produção
+app.config['SQLALCHEMY_DATABASE_URI'] = 'postgresql://vivaz_db_user:zPAolmu8BzplatFF8lTtoHdZZI1EZkM9@dpg-d1s0v86mcj7s73ebv1g0-a:5432/vivaz_db'
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 app.config['JWT_SECRET_KEY'] = 'supersecretkey'  # Alterar para produção
 
