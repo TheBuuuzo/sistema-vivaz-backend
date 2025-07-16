@@ -1,0 +1,11 @@
+Flask
+Flask-Migrate
+Flask-JWT-Extended
+SQLAlchemy
+flask_sqlalchemy
+python-dotenv
+Flask-Mail
+Flask-Cors
+Flask-SQLAlchemy
+requests
+Werkzeug
