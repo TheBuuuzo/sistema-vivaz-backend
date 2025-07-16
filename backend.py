@@ -682,18 +682,18 @@ if __name__ == '__main__':
     with app.app_context():
         db.create_all()
 
-    #Criar adm
-    if not Usuario.query.filter_by(email="admin@vivaz.com").first():
-            from werkzeug.security import generate_password_hash
+        #Criar adm
+        if not Usuario.query.filter_by(email="admin@vivaz.com").first():
+                from werkzeug.security import generate_password_hash
 
-            admin = Usuario(
-                nome="Administrador",
-                email="admin@vivaz.com",
-                senha=generate_password_hash("200817"),
-                cargo="Admin",
-                periodo_gestao="SEMPRE"
-            )
-            db.session.add(admin)
-            db.session.commit()
-            print("✅ Usuário admin criado!")
+                admin = Usuario(
+                    nome="Administrador",
+                    email="admin@vivaz.com",
+                    senha=generate_password_hash("200817"),
+                    cargo="Admin",
+                    periodo_gestao="SEMPRE"
+                )
+                db.session.add(admin)
+                db.session.commit()
+                print("✅ Usuário admin criado!")
     app.run(host="0.0.0.0", port=5000, debug=True)
