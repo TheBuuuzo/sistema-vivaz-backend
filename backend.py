@@ -12,7 +12,9 @@ import requests, re, os
 # Configuração do app
 app = Flask(__name__)
 
-CORS(app, origins=["*"], supports_credentials=True)
+#CORS(app, origins=["*"], supports_credentials=True)
+CORS(app, origins=["https://sistema-vivaz-frontend.vercel.app"])
+
 @app.after_request
 def aplicar_cors(response):
     response.headers["Access-Control-Allow-Origin"] = "*"
