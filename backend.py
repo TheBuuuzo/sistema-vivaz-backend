@@ -13,7 +13,7 @@ import requests, re, os
 app = Flask(__name__)
 
 #CORS(app, origins=["*"], supports_credentials=True)
-CORS(app, origins=["https://*.vercel.app"], supports_credentials=True)
+CORS(app, origins=[r"https://.*\.vercel\.app"], supports_credentials=True)
 
 @app.after_request
 def aplicar_cors(response):
