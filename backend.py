@@ -49,6 +49,19 @@ def add_business_days(start_date, num_days):
 
 # Inicializando
 jwt = JWTManager(app)
+
+@jwt.unauthorized_loader
+def unauthorized_callback(callback):
+    return jsonify({"message": "Token ausente ou inválido"}), 401
+
+@jwt.invalid_token_loader
+def invalid_token_callback(reason):
+    return jsonify({"message": f"Token inválido: {reason}"}), 401
+
+@jwt.expired_token_loader
+def expired_token_callback(jwt_header, jwt_payload):
+    return jsonify({"message": "Token expirado"}), 401
+
 db = SQLAlchemy(app)
 
 # Modelos
