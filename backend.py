@@ -693,7 +693,13 @@ def esqueci_senha():
     
     link = f"https://sistema-vivaz-frontend.vercel.app/nova-senha?token={token}"
 
-    msg = Message("Redefinição de Senha", recipients=[email])
+
+    msg = Message(
+        subject="Redefinição de Senha",
+        sender=app.config['MAIL_USERNAME'],
+        recipients=[email]
+    )
+
     msg.body = f"Olá {usuario.nome},\n\nClique no link para redefinir sua senha:\n\n{link}\n\nSe não foi você, ignore este e-mail."
     
     mail.send(msg)
