@@ -709,10 +709,17 @@ def esqueci_senha():
 @jwt_required()
 def nova_senha():
     usuario_id = get_jwt_identity()
+    print("✅ Token decodificado. ID:", usuario_id)
+
     data = request.get_json()
+    print("📝 JSON recebido:", data)
+
     nova = data.get("nova_senha")
+    print("🔐 Nova senha recebida:", nova)
 
     usuario = Usuario.query.get(usuario_id)
+    print("👤 Usuário encontrado:", usuario.email if usuario else "NÃO ENCONTRADO")
+
     if not usuario:
         return jsonify({"message": "Usuário não encontrado"}), 404
 
