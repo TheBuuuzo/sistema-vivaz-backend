@@ -706,15 +706,35 @@ def esqueci_senha():
     return jsonify({"message": "E-mail de redefinição enviado com sucesso!"})
 
 @app.route("/redefinir-senha", methods=["POST"])
+@jwt_required()
 def nova_senha():
-    print("➡️ Entrou na função sem jwt_required")
+    try:
+        usuario_id = get_jwt_identity()
+        print("✅ Token decodificado. ID:", usuario_id)
 
-    auth_header = request.headers.get("Authorization")
-    print("🔐 Authorization recebido:", auth_header)
+        data = request.get_json()
+        print("📝 JSON recebido:", data)
 
-    return jsonify({"message": "Debug OK!"})
+        nova = data.get("nova_senha")
+        print("🔐 Nova senha recebida:", nova)
 
+        usuario = Usuario.query.get(usuario_id)
+        print("👤 Usuário encontrado:", usuario.email if usuario else "NÃO ENCONTRADO")
 
+        if not usuario:
+            return jsonify({"message": "Usuário não encontrado"}), 404
+
+        if not nova:
+            return jsonify({"message": "Nova senha não fornecida"}), 422
+
+        usuario.senha = generate_password_hash(nova)
+        db.session.commit()
+
+        return jsonify({"message": "Senha redefinida com sucesso!"})
+    
+    except Exception as e:
+        print("❌ Erro inesperado:", str(e))
+        return jsonify({"message": "Erro interno", "erro": str(e)}), 500
 
 if __name__ == '__main__':
     with app.app_context():
