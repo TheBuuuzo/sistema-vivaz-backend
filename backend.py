@@ -15,12 +15,13 @@ app = Flask(__name__)
 #CORS(app, origins=["*"], supports_credentials=True)
 CORS(app, origins=["https://sistema-vivaz-frontend.vercel.app"], supports_credentials=True)
 
-#@app.after_request
-#def aplicar_cors(response):
-#    response.headers["Access-Control-Allow-Origin"] = "*"
-#    response.headers["Access-Control-Allow-Methods"] = "GET, POST, PUT, DELETE, OPTIONS"
-#    response.headers["Access-Control-Allow-Headers"] = "Content-Type, Authorization"
-#    return response
+@app.after_request
+def aplicar_cors(response):
+    response.headers["Access-Control-Allow-Origin"] = "https://sistema-vivaz-frontend.vercel.app"
+    response.headers["Access-Control-Allow-Credentials"] = "true"
+    response.headers["Access-Control-Allow-Headers"] = "Content-Type, Authorization"
+    response.headers["Access-Control-Allow-Methods"] = "GET, POST, PUT, DELETE, OPTIONS"
+    return response
 
 #app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///sistema_cotacao.db'  # Trocar para PostgreSQL em produção
 app.config['SQLALCHEMY_DATABASE_URI'] = 'postgresql://vivaz_db_user:zPAolmu8BzplatFF8lTtoHdZZI1EZkM9@dpg-d1s0v86mcj7s73ebv1g0-a:5432/vivaz_db'
