@@ -691,7 +691,7 @@ def esqueci_senha():
     # Cria token com validade de 30 min
     token = create_access_token(identity=usuario.id, expires_delta=timedelta(minutes=30))
     
-    link = f"https://sistema-vivaz-frontend.vercel.app/nova-senha?token={token}"
+    link = f"https://sistema-vivaz-frontend.vercel.app/redefinir-senha?token={token}"
 
 
     msg = Message(
