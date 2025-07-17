@@ -702,7 +702,7 @@ def esqueci_senha():
         return jsonify({"message": "E-mail não encontrado"}), 404
 
     # Cria token com validade de 30 min
-    token = create_access_token(identity=usuario.id, expires_delta=timedelta(minutes=30))
+    token = create_access_token(identity=str(usuario.id), expires_delta=timedelta(minutes=30))
     
     link = f"https://sistema-vivaz-frontend.vercel.app/redefinir-senha?token={token}"
 
